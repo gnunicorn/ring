@@ -99,6 +99,7 @@ impl private::Sealed for SystemRandom {}
 #[cfg(not(any(target_os = "linux",
               target_os = "macos",
               target_os = "ios",
+              target_arch = "wasm32",
               windows)))]
 use self::urandom::fill as fill_impl;
 
@@ -111,6 +112,17 @@ use self::sysrand_or_urandom::fill as fill_impl;
 
 #[cfg(any(target_os = "macos", target_os = "ios"))]
 use self::darwin::fill as fill_impl;
+
+
+#[cfg(target_arch = "wasm32")]
+fn fill_impl(dest: &mut [u8]) -> Result<(), error::Unspecified>{
+    use rand_ext::{thread_rng, Rng};
+    match thread_rng().try_fill(dest) {
+        Ok(()) => Ok(()),
+        Err(_err) => Err(error::Unspecified.into())
+    }
+}
+
 use private;
 
 #[cfg(target_os = "linux")]

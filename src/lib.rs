@@ -71,6 +71,10 @@
 #[cfg(target_os = "linux")]
 extern crate libc;
 
+
+#[cfg(target_arch = "wasm32")]
+extern crate rand as rand_ext;
+
 #[cfg(feature = "internal_benches")]
 extern crate test as bench;
 

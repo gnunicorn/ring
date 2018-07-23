@@ -256,6 +256,7 @@ const ASM_TARGETS:
     ("x86", Some(WINDOWS), "win32n"),
     ("x86", Some("ios"), "macosx"),
     ("x86", None, "elf"),
+    ("wasm32", None, "linux32"),
     ("arm", Some("ios"), "ios32"),
     ("arm", None, "linux32"),
 ];
